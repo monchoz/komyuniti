@@ -4,7 +4,10 @@ Ext.application({
 		Ext.Viewport.add({
 			xtype: 'panel',
 			id: 'JSONP',
-			scroll: 'vertical',
+			scrollable : {
+				direction     : 'vertical',
+				directionLock : true
+			},
 			items: [{
 				xtype: 'toolbar',
 				docked: 'top',
@@ -16,7 +19,9 @@ Ext.application({
 						tpl = new Ext.XTemplate([
 							'<div>',
 							'<tpl for=".">',
-							'<p>{headline}</p>',
+							'<h2>{headline}</h2>',
+							'<p>{description}</p>',
+							'</br>',
 							'</tpl>',
 							'</div>'
 							]);
@@ -26,12 +31,13 @@ Ext.application({
 						Ext.util.JSONP.request({
 							url: 'http://api.espn.com/v1/sports/news/headlines',
 							params: {
-								'region': 'mx', 
-								'insider':'yes',
+								'region': 'mx',
+								'inseder': 'yes',
+								'lang': 'es',
 								'apikey': 'gp5wjkaxtfrnxrpqd93vhkrb',
-							    '_accept': 'application/json'},
-							callbackKey: 'callback',
-							callback: function(successful, data){
+								'_accept': 'application/json'},
+								callbackKey: 'callback',
+								callback: function(successful, data){
 									// for (var i = 0; i < data.length; i++) {
 									// 	results = data[i];
 									// }
@@ -40,9 +46,9 @@ Ext.application({
 									Ext.Viewport.unmask();
 								}
 							}); 
-                    }
-                }]
-            }]
-        });
-	}
+					}
+				}]
+			}]
+		});
+}
 });
